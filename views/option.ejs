@@ -1,0 +1,257 @@
+<script src="js/query.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<!--<script src="https://apis.google.com/js/client.js?onload=checkAuth" gapi_processed="true"></script>-->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="http://cdn.jsdelivr.net/jquery.cookie/1.4.0/jquery.cookie.min.js"></script>
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+<style>/*
+    .languageoption button {
+    background-color:lightsteelblue;
+    color: black;
+    padding: 12px 30px;
+    font-size: 15px;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    }
+
+    .langbtn:hover, .langbtn:focus {
+    background-color: rgb(150, 181, 221);
+    }
+
+    .langdown {
+    position: relative;
+    display: inline-block;
+    }
+
+    .language-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 220px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    }
+
+    .language-content a {
+    color: black;
+    padding: 11px 30px;
+    text-decoration: none;
+    display: block;
+    }
+
+    .langdown a:hover {
+        background-color: #ddd;
+    }
+
+    .show {display: block;}
+    
+    input.form-check-input[type="radio"]{
+        visibility:none;
+        }*/
+
+    /* With Translation Option YES/NO */
+    .langbtn {
+        background-color:lightsteelblue;
+        color: black;
+        padding: 8px 30px;
+        font-size: 15px;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        border-radius: 10px;
+    }
+
+    .act{
+        background-color: rgb(90, 141, 207);
+        color: white;
+        box-shadow: 0 8px 8px 0 lightslategrey;
+    }
+
+    .langbtn:hover{
+        background-color: rgb(233, 206, 206);
+        box-shadow: 0 8px 8px 0 lightslategrey;
+    }
+
+
+    /* With Translation Option YES/NO */
+    .btn {
+        background-color:lightsteelblue;
+        color: black;
+        padding: 8px 30px;
+        font-size: 15px;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        border-radius: 10px;
+    }
+
+    .active{
+        background-color: rgb(90, 141, 207);
+        color: white;
+        box-shadow: 0 8px 8px 0 lightslategrey;
+    }
+    .btn:hover{
+        background-color: rgb(233, 206, 206);
+        box-shadow: 0 8px 8px 0 lightslategrey;
+    }
+
+    .optioncontent p{
+        font-size: 16px;
+        font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    }
+
+    .aloption input, label{
+        cursor: pointer;
+    }
+
+</style>
+
+<div class="optioncontent">
+    <!--- Select Language -->
+    <div>
+        <p>Select your Language</p>
+        <div id="languageoption">
+            <button class="langbtn act" id="eng" onclick="engbtn()">ENGLISH</button>&nbsp;
+            <button class="langbtn" id="engmal" onclick="embtn()">ENGLISH - MALAY</button>&nbsp;
+            <button class="langbtn" id="engchi" onclick="ecbtn()">ENGLISH - CHINESE</button>
+        </div>
+
+        <script>
+            // Language Option Stay Active When Clicked
+            var heads = document.getElementById("languageoption");
+            var button = heads.getElementsByClassName("langbtn");
+            for (var j = 0; j < button.length; j++) {
+                button[j].addEventListener("click", function() {
+                    var currents = document.getElementsByClassName("act");
+                    currents[0].className = currents[0].className.replace(" act", "");
+                    this.className += " act";
+                });
+            }
+        </script>
+    </div>
+    
+    <br>
+
+    <!--- Select With Translation -->
+    <div id="transoption">
+        <p>With Translation ?</p>
+        <button class="btn active">YES</button>&nbsp;
+        <button class="btn">NO</button>
+
+        <script>
+            // With Translate Option Stay Active When Clicked
+            var header = document.getElementById("transoption");
+            var btns = header.getElementsByClassName("btn");
+            for (var i = 0; i < btns.length; i++) {
+                btns[i].addEventListener("click", function() {
+                    var current = document.getElementsByClassName("active");
+                    current[0].className = current[0].className.replace(" active", "");
+                    this.className += " active";
+                });
+            }
+        </script>
+    </div>
+    
+    <br>
+
+    <!--- Select Algorithms -->
+    <div class="aloption">
+        <p>Select your Approaches</p>
+        <table>
+            <tr>
+                <td width="300px" style="padding: 0px 5px; vertical-align: top;">
+                    <div class="custom-control custom-checkbox">
+                        <div><input type="checkbox" class="custom-control-input" id="supervised" checked>
+                        <label class="custom-control-label" for="supervised">Supervised Learning</label></div>
+                            
+                        <div><input type="checkbox" class="custom-control-input" id="semi">
+                        <label class="custom-control-label" for="semi">Semi-supervised Learning</label></div>
+                
+                        <div><input type="checkbox" class="custom-control-input" id="lexi">
+                        <label class="custom-control-label" for="lexi">Lexicon-based Learning</label></div>
+                    </div>
+                </td>
+                <td width="300px">
+                    <div class="hehe custom-control custom-checkbox">
+                        <div><input type="checkbox" class="custom-control-input" id="a1" checked>
+                        <label class="custom-control-label" for="a1">Approach 1</label></div>
+                            
+                        <div><input type="checkbox" class="custom-control-input" id="a2">
+                        <label class="custom-control-label" for="a2">Approach 2</label></div>
+
+                        <div><input type="checkbox" class="custom-control-input" id="a3">
+                        <label class="custom-control-label" for="a3">Approach 3</label></div>
+
+                        <div><input type="checkbox" class="custom-control-input" id="a4">
+                        <label class="custom-control-label" for="a4">Approach 4</label></div>
+
+                        <div><input type="checkbox" class="custom-control-input" id="a5">
+                        <label class="custom-control-label" for="a5">Approach 5</label></div>
+                    </div>
+                </td>
+            </tr>
+
+            <script>
+            </script>
+        </table>
+    </div>
+</div>
+    
+<script>
+    $(function() {
+        ecbtn();
+        $("#engchi").click(ecbtn);
+    });
+
+    function ecbtn() {
+        if (this.checked) {
+            $("input#semi").removeAttr("disabled");
+        } else {
+            $("input#semi").attr("disabled", true);
+        }
+    }
+</script>
+
+        <!--<div><input type="checkbox" class="custom-control-input" id="defaultIndeterminate2" checked>
+        <label class="custom-control-label" for="defaultIndeterminate2">Default indeterminate</label></div>
+
+        <div><input type="checkbox" class="custom-control-input" id="defaultUncheckedDisabled2" disabled>
+        <label class="custom-control-label" for="defaultUncheckedDisabled2">Default unchecked disabled</label></div>
+          
+        <input type="checkbox" class="chkbox" value="supervised" onclick="selsuper()"> Supervised<br>
+        <ul id="superopt" style="display: none" style="margin-left: 15px">
+            <input type="checkbox" class="chkbox" value="supervised"> Approach 1<br>
+            <input type="checkbox" class="chkbox" value="supervised"> Approach 2<br>
+            <input type="checkbox" class="chkbox" value="supervised"> Approach 3<br>
+            <input type="checkbox" class="chkbox" value="supervised"> Approach 4<br>
+            <input type="checkbox" class="chkbox" value="supervised"> Approach 5<br>
+        </ul>
+        <input type="checkbox" class="chkbox" value="semisuper"> Semi &#45; Supervised<br>
+        <input type="checkbox" class="chkbox" value="supervised"> Lexicon<br>-->
+
+<!--<script>
+    function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+    }
+
+    window.onclick = function(event) {
+        if (!event.target.matches('.langbtn')) {
+            var dropdowns = document.getElementsByClassName("language-content");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    }
+</script>-->

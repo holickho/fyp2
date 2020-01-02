@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+</head>
+<script>
+    function onSignIn(googleUser) {
+        // Useful data for your client-side scripts:
+        var profile = googleUser.getBasicProfile();
+        console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+        console.log('Full Name: ' + profile.getName());
+        console.log('Given Name: ' + profile.getGivenName());
+        console.log('Family Name: ' + profile.getFamilyName());
+        console.log("Image URL: " + profile.getImageUrl());
+        console.log("Email: " + profile.getEmail());
+
+        // The ID token you need to pass to your backend:
+        var id_token = googleUser.getAuthResponse().id_token;
+        console.log("ID Token: " + id_token);
+
+        $.ajax({
+            url: 'http://localhost:5000/user/googleLogin',
+            type: "POST",
+            data: {
+                email: profile.getEmail(),
+                imageURL: profile.getImageUrl()
+            },
+            cache: false,
+            success: function (data) {
+                if (data == true) {
+                    window.location.replace("/dashboard");
+                }
+                else {
+                    alert(data);
+                }
+            },
+            error: function (jqxhr, status, error) {
+                alert('Error: ', error);
+            },
+        });
+    }
+    
+</script>
+
+<body>
+
+
+  <div class="row mt-5">
+    <div class="col-md-6 m-auto">
+      <div class="card card-body">
+        <h1 class="text-center mb-3"><i class="fas fa-sign-in-alt"></i> Login</h1>
+        <% include ./partials/messages %>
+        <form action="/users/login" method="POST">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" class="form-control" placeholder="Enter Email" />
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" class="form-control" placeholder="Enter Password" />
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Login</button>
+
+          <!-- <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div> -->
+
+        </form>
+        <p class="lead mt-4">
+          No Account? <a href="/users/register">Register</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>

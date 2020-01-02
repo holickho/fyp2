@@ -1,0 +1,259 @@
+<script src="js/query.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<!--<script src="https://apis.google.com/js/client.js?onload=checkAuth" gapi_processed="true"></script>-->
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+<style>
+
+</style>
+
+<div>
+    <table style="border:1px solid;">
+        <tr>
+            <td  style="border:1px solid;">
+                <table id="corpustable" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th class="th-sm" onclick="sort(0)">Before
+                            </th>
+                            <th class="th-sm" onclick="sort(1)">After
+                            </th>
+                            <th class="th-sm" onclick="sort(2)">Tagging
+                            </th>
+                            <th class="th-sm" onclick="sort(3)">Age
+                            </th>
+                            <th class="th-sm" onclick="sort(4)">Start date
+                            </th>
+                            <th class="th-sm" onclick="sort(5)">Salary
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Tiger Nixon</td>
+                            <td>System Architect</td>
+                            <td>Edinburgh</td>
+                            <td>61</td>
+                            <td>2011/04/25</td>
+                            <td>$320,800</td>
+                        </tr>
+                        <tr>
+                            <td>Garrett Winters</td>
+                            <td>Accountant</td>
+                            <td>Tokyo</td>
+                            <td>63</td>
+                            <td>2011/07/25</td>
+                            <td>$170,750</td>
+                        </tr>
+                        <tr>
+                            <td>Ashton Cox</td>
+                            <td>Junior Technical Author</td>
+                            <td>San Francisco</td>
+                            <td>66</td>
+                            <td>2009/01/12</td>
+                            <td>$86,000</td>
+                        </tr>
+                        <tr>
+                            <td>Cedric Kelly</td>
+                            <td>Senior Javascript Developer</td>
+                            <td>Edinburgh</td>
+                            <td>22</td>
+                            <td>2012/03/29</td>
+                            <td>$433,060</td>
+                        </tr>
+                        <tr>
+                            <td>Airi Satou</td>
+                            <td>Accountant</td>
+                            <td>Tokyo</td>
+                            <td>33</td>
+                            <td>2008/11/28</td>
+                            <td>$162,700</td>
+                        </tr>
+                        <tr>
+                            <td>Brielle Williamson</td>
+                            <td>Integration Specialist</td>
+                            <td>New York</td>
+                            <td>61</td>
+                            <td>2012/12/02</td>
+                            <td>$372,000</td>
+                        </tr>
+                        <tr>
+                            <td>Herrod Chandler</td>
+                            <td>Sales Assistant</td>
+                            <td>San Francisco</td>
+                            <td>59</td>
+                            <td>2012/08/06</td>
+                            <td>$137,500</td>
+                        </tr>
+                        <tr>
+                            <td>Rhona Davidson</td>
+                            <td>Integration Specialist</td>
+                            <td>Tokyo</td>
+                            <td>55</td>
+                            <td>2010/10/14</td>
+                            <td>$327,900</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+            <td style="width: 100px;"  style="border:1px solid;">
+            </td>
+            <td style="width: 500px;"  style="border:1px solid;">
+                <!-- Search form -->
+                <input id="searchbar" class="form-control" type="text" placeholder="Search" aria-control="corpustable" onkeyup="search()"><br>
+                <div class="custom-control custom-checkbox" style="margin-left: 20px;">
+                    <div><input type="checkbox" class="custom-control-input" id="obj" checked>
+                    <label class="custom-control-label" for="obj">With Objective</label></div>
+                        
+                    <div><input type="checkbox" class="custom-control-input" id="sub">
+                    <label class="custom-control-label" for="sub">With Subjective</label></div>
+            
+                    <div><input type="checkbox" class="custom-control-input" id="senti">
+                    <label class="custom-control-label" for="senti">With Sentiment Analysis</label></div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div><br>
+
+<div>
+    <button class="exbtn">EDIT</button>
+    <button class="exbtn">DELETE</button>
+    <button class="exbtn">EXPORT</button>
+</div>
+
+<script>
+    function search() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("searchbar");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("corpustable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }       
+        }
+    }
+
+    function sort(n){
+        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        table = document.getElementById("corpustable");
+        switching = true;
+        // Set the sorting direction to ascending:
+        dir = "asc";
+        /* Make a loop that will continue until no switching has been done: */
+        while (switching) {
+            // Start by saying: no switching is done:
+            switching = false;
+            rows = table.rows;
+            /* Loop through all table rows (except the first, which contains table headers): */
+            for (i = 1; i < (rows.length - 1); i++) {
+            // Start by saying there should be no switching:
+            shouldSwitch = false;
+            /* Get the two elements you want to compare, one from current row and one from the next: */
+            x = rows[i].getElementsByTagName("TD")[n];
+            y = rows[i + 1].getElementsByTagName("TD")[n];
+            /* Check if the two rows should switch place, based on the direction, asc or desc: */
+            if (dir == "asc") {
+                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                // If so, mark as a switch and break the loop:
+                shouldSwitch = true;
+                break;
+                }
+                } else if (dir == "desc") {
+                    if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                    // If so, mark as a switch and break the loop:
+                    shouldSwitch = true;
+                    break;
+                    }
+                }
+            }
+            if (shouldSwitch) {
+            /* If a switch has been marked, make the switch
+            and mark that a switch has been done: */
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+            // Each time a switch is done, increase this count by 1:
+            switchcount ++;
+            } else {
+                /* If no switching has been done AND the direction is "asc",
+                set the direction to "desc" and run the while loop again. */
+                if (switchcount == 0 && dir == "asc") {
+                    dir = "desc";
+                    switching = true;
+                }
+            }
+        }
+    }
+
+    $(document).ready(function () {
+        $('#corpustable').DataTable({
+            "scrollX": true,
+            "scrollY": "50vh",
+            "scrollCollapse": true,
+            "searching": true,
+            "pagging":true,
+            "ordering":true
+        });
+        $('.dataTables_length').addClass('bs-select');
+    });
+</script>
+
+<style>
+    .dtHorizontalExampleWrapper {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    #dtHorizontalExample th, td {
+        white-space: nowrap;
+    }
+
+    table.dataTable thead .sorting:after,
+    table.dataTable thead .sorting:before,
+    table.dataTable thead .sorting_asc:after,
+    table.dataTable thead .sorting_asc:before,
+    table.dataTable thead .sorting_asc_disabled:after,
+    table.dataTable thead .sorting_asc_disabled:before,
+    table.dataTable thead .sorting_desc:after,
+    table.dataTable thead .sorting_desc:before,
+    table.dataTable thead .sorting_desc_disabled:after,
+    table.dataTable thead .sorting_desc_disabled:before {
+    bottom: .5em;
+    }
+
+    .exbtn {
+        background-color:lightsteelblue;
+        color: black;
+        padding: 8px 30px;
+        font-size: 15px;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        border-radius: 10px;
+        margin-right: 20px;
+    }
+
+    .active{
+        background-color: rgb(90, 141, 207);
+        color: white;
+        box-shadow: 0 8px 8px 0 lightslategrey;
+    }
+    .exbtn:hover{
+        background-color: rgb(233, 206, 206);
+        box-shadow: 0 8px 8px 0 lightslategrey;
+    }
+</style>
+

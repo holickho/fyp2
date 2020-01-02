@@ -1,0 +1,327 @@
+<script src="js/query.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<style>
+    body { 
+        background: url('/public/images/') no-repeat center center fixed; 
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+    }
+
+    .transtable{
+        margin:auto;
+    }
+
+    .transtable textarea{
+        border-radius:10px;
+        border:2px solid;
+        border-color:#888;
+        height:300px;
+        width:800px;
+        padding-left:20px;
+        font-size:22px;
+    }
+
+    .trbtn{
+        height:90px;
+    }
+
+    .trbtn button {
+        background-color:white;
+        color:#666;
+        text-align:center;
+        border-radius:10px;
+        padding:5px;
+        width: 140px;
+        margin-right:15px;
+    }
+
+    .trbtn button:hover {
+        background-color: #143;
+        color:white;
+    }
+
+    .trbtn button:focus {
+        background-color: #143;
+        color:white;
+    }
+
+    .trbtn button:active {
+        background-color: #143;
+        color:white;
+    }
+
+    .trbtn button:hover {
+        background-color: #666;
+        color:white;
+    }
+
+    .trbtn2{
+        height:90px;
+        padding-left: 580px;
+    }
+
+    .trbtn2 img{
+        text-align: right;
+    }
+
+    .inputData{
+        text-align: left;
+        padding: 10px;
+        width: 600px;
+        height: 200px;
+        vertical-align: top;
+    }
+
+    .outputData{
+        text-align: left;
+        padding: 10px;
+        width: 600px;
+        height: 200px;
+        vertical-align: top;
+    }
+
+    .shareelem{
+        height:310px;
+        width:0;
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Stay on top */
+        top: 180px; /* Stay at the top */
+        right:0;
+        background-color:#FFF; /* Black*/
+        overflow: hidden; /* Disable horizontal scroll */
+        transition: 0.5s;
+        text-align: center;
+    }
+
+    .shareelem img{
+        height:60px;
+        width:60x;
+        padding: 4px 4px;
+    }
+
+    /* The Modal (background) */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        padding-top: 500px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    /* Modal Content */
+    .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 30%;
+    }
+
+    .ground{
+        width: 100%;
+    }
+
+    .ground2{
+        padding-top: 60px;
+        width: 100%;
+        background-color:rgb(100, 198, 255);
+    }
+
+    .share{
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        padding-top: 149px; /* Location of the box */
+        right: 200px;
+        top: 0;
+    }
+
+    .output-analysis{
+        margin: auto;
+        height:375px;
+        width:1800px;
+        border: #666 1px solid;
+        border-radius: 10px;
+        background-color: white;
+    }
+
+    .output-analysis p{
+        padding-top: 10px;
+        padding-left: 15px;
+        font-size: 25px;
+    }
+
+    .translogo{
+        height: 50px;
+        width: 50px;
+        background: url("public/images/trans_white.png");
+        display: inline-block;
+    }
+    .translogo:hover{
+        background: url("public/images/trans_dark.png");
+    }
+
+</style>
+
+<body>
+<div class="upload" >
+    <button class="uploadicon" onclick="uploadJSON()">UPLOAD</button>
+</div>
+
+<div class="share" >
+    <img id='shareicon'
+            onClick="sharebar()" 
+            src="/public/images/share-logo.png"  
+            width="45" height="45"/>
+</div>
+
+<div id="shareelement" class="shareelem">
+    <a href="mailto:?Subject=Simple Share Buttons&amp;Body=I%20saw%20this%20and%20thought%20of%20you!%20 https://simplesharebuttons.com">
+        <img src="https://simplesharebuttons.com/images/somacro/email.png" alt="Email" />
+    </a>
+    
+    <!-- Facebook -->
+    <a href="http://www.facebook.com/sharer.php?u=https://simplesharebuttons.com" target="_blank">
+        <img src="https://simplesharebuttons.com/images/somacro/facebook.png" alt="Facebook" />
+    </a>
+    
+    <!-- Google+ -->
+    <a href="https://plus.google.com/share?url=https://simplesharebuttons.com" target="_blank">
+        <img src="https://simplesharebuttons.com/images/somacro/google.png" alt="Google" />
+    </a>
+    
+    <!-- LinkedIn -->
+    <a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=https://simplesharebuttons.com" target="_blank">
+        <img src="https://simplesharebuttons.com/images/somacro/linkedin.png" alt="LinkedIn" />
+    </a>
+    
+    <!-- Twitter -->
+    <a href="https://twitter.com/share?url=https://simplesharebuttons.com&amp;text=Simple%20Share%20Buttons&amp;hashtags=simplesharebuttons" target="_blank">
+        <img src="https://simplesharebuttons.com/images/somacro/twitter.png" alt="Twitter" />
+    </a>
+</div>
+
+<div class="ground" onclick="closeshare()">
+	<div>
+        <table class="transtable" width="1600px">
+            <tr>
+                <td class="trbtn">
+                    
+                    <button id="english" class="eng" onclick="engstaycool()">ENGLISH</button>
+                    <button id="chinese" class="chi" onclick="chistaycool()">CHINESE</button>
+                    <button id="malay" class="mal" onclick="malstaycool()">MALAY</button>
+                    <button id="autodt" class="autodetect" onclick="autostaycool()">AUTO DETECT</button>
+                </td>
+                <td>&nbsp;</td>
+                <td class="trbtn2">
+                    <button id="copying" class="copy" onClick="copy()">Copy</button>
+                    <img id='favor'
+                        onClick="favorite()" 
+                        src="/public/images/favour-logo.png"  
+                        width="58" height="58"/>
+                    
+                    
+                </td>
+            </tr>
+            
+            <tr>
+                <td height="210px"><textarea id="inData" class="inputData" type="text" placeholder="Type something &#46;&#46;&#46;" wrap="on"></textarea></td>
+                <td class="transbtn">
+                    <div class='translogo' onClick="translateit()">
+                        <img src="/public/images/trans_white.png" height="50px" width="50px"/>
+                    </div>
+                </td>
+                <td height="210px"><textarea id="outData" class="outputData" type="output" placeholder="Translation" wrap="on readonly"></textarea></td>
+            </tr>
+        </table>
+	</div>
+</div>
+
+<div class="ground2"  onclick="closeshare()">
+    <div class="output-analysis">
+        <p>Sentiment Analysis &#46;&#46;&#46;</p>
+    </div>
+</div>
+
+<div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div id="modal-body"></div>
+    </div>
+</div>
+
+</body>
+
+<script>
+    var textarea = document.getElementById("inData");
+    var textarea2 = document.getElementById("outData");
+    function translateit() {
+       textarea2.value = textarea.value.split(" ").sort().join(" ")
+    }
+
+    function sharebar() {
+        var x = document.getElementById("shareelement");
+        x.style.width="70px";
+        x.style.transition="0.4s";
+    }
+
+    function closeshare() {
+        var x = document.getElementById("shareelement");
+        x.style.width="0";
+        x.style.transition="0.4s";
+        var y = document.getElementById("myModal");
+        y.style.display="none";
+        y.style.transition="0.4s";
+    }
+
+    function copy() {
+		alert("Copy saved to clipboard!");
+		var copyText = document.getElementById("copying");
+		/* Select the text field */
+		copyText.select();
+		copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+		/* Copy the text inside the text field */
+		document.execCommand("copy");
+	}
+
+    function favorite() {
+		alert("Added to FAVOURITE!");
+	}
+
+    // Get the modal
+    var modal = document.getElementById('myModal');
+
+    function uploadJSON(){
+        var modal_html = '<input class="file-upload-button" id="fileToLoad" type="file" />'+
+                        '<br />'+
+                        '<button type="button" class="upload-button btn btn-success" style="float:right;">Upload</button>';
+        document.getElementById("modal-body").innerHTML = modal_html;
+        
+        openModal();
+    }
+
+    function openModal(){
+        modal.style.display = "block";
+    }
+
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>

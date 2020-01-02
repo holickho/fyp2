@@ -1,0 +1,23 @@
+<html>
+  <head>
+    <style>
+      input[type='text'] {width:50px;}
+      textarea {width:500px;height:300px;}
+    </style>
+  </head>
+  <body>
+  <div>
+    <h2>Test</h2>
+    <p>The number of words is <span id="wordCount"></span></p>
+    <textarea id="toCount"></textarea>
+  </div>
+      <script>
+
+    document.getElementById('toCount').addEventListener('input', function () {
+        var text = this.value,
+        count = text.trim().replace(/\s+/g, ' ').split(' ').length;
+        document.getElementById('wordCount').textContent = count;
+    });
+    </script>
+  </body>
+</html>

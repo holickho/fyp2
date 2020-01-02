@@ -1,0 +1,394 @@
+<script src="js/query.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+<style>
+    body{
+        font-family: Comic Sans MS;
+    }
+    .trbtn {
+        height: 90px;
+    }
+
+    .trbtn button {
+        background-color: white;
+        color: #666;
+        text-align: center;
+        border-radius: 15px;
+        padding: 13px;
+        width: 240px;
+        margin-right: 10px;
+        margin-left: 3%;
+    }
+
+    .trbtn button:hover {
+        background-color: rgb(231, 234, 238);
+        color: white;
+    }
+
+    .trbtn button:focus {
+        background-color: lightsteelblue;
+        color: white;
+    }
+
+    .trbtn button:active {
+        background-color: lightsteelblue;
+        color: white;
+    }
+
+    .trbtn button:hover {
+        background-color: lightsteelblue;
+        color: white;
+    }
+
+    .trbtn2 {
+        height: 90px;
+        padding-left: 580px;
+    }
+
+    .trbtn2 img {
+        text-align: right;
+    }
+
+    .column {
+        float: left;
+        width: 50%;
+    }
+
+    /* Clear floats after the columns */
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+        /*border-color: black;*/
+        /*border-style: solid;*/
+    }
+
+    .modal {
+        display: none;
+        /* Hidden by default */
+        position: fixed;
+        /* Stay in place */
+        z-index: 1;
+        /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%;
+        /* Full width */
+        height: 100%;
+        /* Full height */
+        overflow: auto;
+        /* Enable scroll if needed */
+        background-color: rgb(0, 0, 0);
+        /* Fallback color */
+        background-color: rgba(0, 0, 0, 0.4);
+        /* Black w/ opacity */
+    }
+
+    /* Modal Content/Box */
+    .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto;
+        /* 15% from the top and centered */
+        padding: 20px;
+        border: 1px solid #888;
+        width: 50%;
+        /* Could be more or less, depending on screen size */
+    }
+
+    /* The Close Button */
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .myBtn button {
+        border-radius: 15px;
+        padding: 13px;
+        width: 240px;
+        background-color:black;
+        border-color: transparent;
+        color: white;
+        margin-top: 2%;
+    }
+
+    .myBtn button:hover {
+        background-color:lightgrey;
+        color: black;
+    }
+
+    .myBtn button:focus {
+        background-color:lightgrey;
+        color: black;
+    }
+
+    .myBtn button:active {
+        background-color:lightgrey;
+        color: black;
+    }
+
+    .myBtn button:hover {
+        background-color:lightgrey;
+        color: black;
+    }
+
+    .btn3 button {
+        background-color: white;
+        text-align: center;
+        border-radius: 10px;
+        padding: 8px;
+        width: 12%;
+        margin-right: 10px;
+        border-style:solid;
+        border-color: #aaa;
+        border-width: 0.5px;
+    }
+
+    .btn3 button:hover {
+        background-color: lightsteelblue;
+        color: white;
+    }
+
+    .btn3 button:focus {
+        background-color: lightsteelblue;
+        color: white;
+    }
+
+    .btn3 button:active {
+        background-color: lightsteelblue;
+        color: white;
+    }
+
+    .optionswitch{
+        height: 350px;
+        width: 650px;
+        /*border: 1px solid;*/
+        margin-left: 50px;
+    }
+
+    .translatetable{
+        width: 1350px;
+        align-content: center;
+        /*border: 1px solid;*/
+    }
+
+    /*.translatetable td{
+
+        border: 1px solid;
+    }*/
+
+    .outputanalysis {
+        width:1350px;
+        /*border: 1px solid;*/
+    }
+
+</style>
+
+<body>
+
+<script>
+    
+        $(document).ready(function () {
+            $("#inputTextToSave").on('keyup', function () {
+                var words = this.value.length; //count characters
+                //var words = this.value.match(/\S+/g).length; //count words
+    
+                if (words > 500) {
+                    // Split the string on first 200 words and rejoin on spaces
+                    var trimmed = $(this).val().split(/\s+/, 500).join(" ");
+                    // Add a space at the end to make sure more typing creates new words
+                    $(this).val(trimmed + " ");
+                }
+                else {
+                    $('#display_count').text(words);
+                    $('#word_left').text(500 - words);
+                }
+            });
+        }); 
+    </script>
+
+<!-- <div class="ground" onclick="closeshare()">
+    <div style="margin-left: 7%;">
+        <table width="1600px">
+            <tr>
+                <td class="trbtn" >
+                    <button id="translate" class="translate" onclick="engstaycool()">TRANSLATION</button>
+                    <button id="subjectivity" class="subjectivity" onclick="chistaycool()">SUBJECTIVITY
+                        ANALYSIS</button>
+                    <button id="sentiment" class="sentiment" onclick="malstaycool()">SENTIMENT ANALYSIS</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div> -->
+
+
+<div style="margin-bottom: 1%;" class="btn3" >
+    <button>Text</button>
+    <button onclick="modelUploadFile()">Documents</button>
+</div>
+
+<table class="translatetable">
+    <tr>
+        <td width="750px">
+            <div class="md-form amber-textarea active-amber-textarea">
+                <textarea id="inputTextToSave" class="md-textarea form-control" rows="13" cols="60"
+                    placeholder="Enter text here..." style="border-color: black;
+                    border-style: solid; border-radius: 6px;"></textarea>
+                <span id="display_count">0</span>/ 500 characters
+            </div>
+        </td>
+        <td width="650px">
+            <div class="optionswitch">
+                <div class="optiondiv">
+                    <!-- views/option.ejs -->
+                    <% include ../views/option %>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <!-- <p id="polarity">Polarity:</p>
+        <p id="Emotion">Emotion: <img src="images/angry.png"></p> -->
+        <form name="form" class="sta-main-form open" action="/uploadfile" method="post" enctype="multipart/form-data">
+            <div style="margin-left:30%">
+                <label for="file" style="font-size: xx-large;">Choose a document</label></br>
+                <p style="margin-left: 6%;">Upload a txt, csv or xml file only</p>
+                <input id="file" type="file" name="file" style="margin-left: 10%;" /></br></br>
+                <button type="submit" value="upload" onclick="return validate();" class="btn btn-info btn-rounded"
+                    style="background-color:lightsteelblue;border-color:transparent;color: black;width:30%;margin-top:0.5%;margin-left:15%">Upload
+                    File</button>
+            </div>
+        </form>
+
+        <script>
+            function validate() {
+                var file = form.file.value;
+                var reg = /(.*?)\.(txt|csv|xml|)$/;
+                if (!file.match(reg)) {
+                    alert("Invalid File");
+                    return false;
+                }
+                else
+                    alert("File Uploaded");
+
+                var fileToLoad = document.getElementById("file").files[0];
+
+                var fileReader = new FileReader();
+                fileReader.onload = function (fileLoadedEvent) {
+                    var textFromFileLoaded = fileLoadedEvent.target.result;
+                    document.getElementById("inputTextToSave").value = textFromFileLoaded;
+                };
+
+                fileReader.readAsText(fileToLoad, "UTF-8");
+            }
+
+            function modelUploadFile() {
+
+                modal.style.display = "block";
+            }
+
+            // Get the modal
+            var modal = document.getElementById("myModal");
+
+            // Get the button that opens the modal
+            var btn = document.getElementById("myBtn");
+
+            // Get the <span> element that closes the modal
+            var span = document.getElementsByClassName("close")[0];
+
+            // When the user clicks on the button, open the modal
+
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function () {
+                modal.style.display = "none";
+            }
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        </script>
+    </div>
+</div>
+<div class="myBtn" style="text-align: center;">
+    <button onclick="submitText()">ANALYZE</button>
+</div>
+
+<script>
+function submitText(){
+    var inputText = document.getElementById('inputTextToSave').value;
+    //var stringText = inputText.toString();
+    //console.log(inputText);
+    //var jsonString = JSON.stringify(inputText);
+    //console.log(jsonString);
+    $.ajax({
+        url: '/inputTranslate',
+        type: "POST",
+        dataType: "json",
+        data: { inputText },
+        cache: false,
+        success: function(data) {
+            console.log(data + "gaodim");
+            /*
+            if (confirm('Do you want to continue translating?')){
+                window.location.replace("/views/translate");
+            }*/
+        },
+        error: function(jqxhr, status, error) {
+            alert('Error: hi', error);
+        },
+    });
+    console.log(data);
+    
+}
+</script>
+
+<br>
+
+<div class="outputanalysis" style="width: 1350px; border: 1px solid;  border-radius: 6px;">
+    <!-- views/result.ejs -->
+    <% include ../views/result %>
+</div>
+
+</body>
+
+<!--Loading Images-->
+<div id="load" class="d-flex justify-content-center">
+        <div class="spinner-grow text-primary" role="status" style="height: 20px; width: 20px;"></div>&nbsp;&nbsp;
+        <div class="spinner-grow text-primary" role="status" style="height: 20px; width: 20px;"></div>&nbsp;&nbsp;
+        <div class="spinner-grow text-primary" role="status" style="height: 20px; width: 20px;"></div>
+</div>
+
+<!--Loading Script-->
+<script>
+    function showLoad(){
+        varx = document.getElementsById("load");
+        x.style.visibility = "hidden";
+    }
+</script>
+
+<!--Bring Data To Another Page-->
+<!--<script type="text/javascript">jQuery(function($){$('#inputTextToSave').load('result.ejs #tagging');});</script>-->
+
+
+
