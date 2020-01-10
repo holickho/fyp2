@@ -7,147 +7,132 @@
 <!--<script src="https://apis.google.com/js/client.js?onload=checkAuth" gapi_processed="true"></script>-->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="http://cdn.jsdelivr.net/jquery.cookie/1.4.0/jquery.cookie.min.js"></script>
-
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
-<style>/*
-    .languageoption button {
-    background-color:lightsteelblue;
-    color: black;
-    padding: 12px 30px;
-    font-size: 15px;
-    border: none;
-    cursor: pointer;
-    border-radius: 10px;
-    }
-
-    .langbtn:hover, .langbtn:focus {
-    background-color: rgb(150, 181, 221);
-    }
-
-    .langdown {
-    position: relative;
-    display: inline-block;
-    }
-
-    .language-content {
-    display: none;
-    position: absolute;
-    background-color: #f1f1f1;
-    min-width: 220px;
-    overflow: auto;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-    }
-
-    .language-content a {
-    color: black;
-    padding: 11px 30px;
-    text-decoration: none;
-    display: block;
-    }
-
-    .langdown a:hover {
-        background-color: #ddd;
-    }
-
-    .show {display: block;}
-    
-    input.form-check-input[type="radio"]{
-        visibility:none;
-        }*/
-
-    /* With Translation Option YES/NO */
+<style>
+    /* LANGUAGE SELECTION BUTTON*/
     .langbtn {
         background-color:lightsteelblue;
         color: black;
-        padding: 8px 30px;
+        padding: 10px 30px;
         font-size: 15px;
+        width: 220px;
+        margin-right: 10px;
+        margin-bottom: 10px;
         border: none;
         outline: none;
         cursor: pointer;
-        border-radius: 10px;
-    }
+        border-radius: 12px;}
 
-    .act{
-        background-color: rgb(90, 141, 207);
-        color: white;
-        box-shadow: 0 8px 8px 0 lightslategrey;
-    }
+    .act{background-color: rgb(90, 141, 207);color: white;box-shadow: 0 8px 8px 0 lightslategrey;}
+    .langbtn:hover{background-color: rgb(233, 206, 206);box-shadow: 0 8px 8px 0 lightslategrey;}
 
-    .langbtn:hover{
-        background-color: rgb(233, 206, 206);
-        box-shadow: 0 8px 8px 0 lightslategrey;
-    }
-
-
-    /* With Translation Option YES/NO */
+    /* TYPE OF TRANSLATION BUTTON */
     .btn {
         background-color:lightsteelblue;
         color: black;
         padding: 8px 30px;
         font-size: 15px;
+        width: 340px;
+        margin-right: 10px;
+        margin-bottom: 10px;
         border: none;
         outline: none;
         cursor: pointer;
-        border-radius: 10px;
-    }
+        border-radius: 10px;}
 
-    .active{
-        background-color: rgb(90, 141, 207);
-        color: white;
-        box-shadow: 0 8px 8px 0 lightslategrey;
-    }
-    .btn:hover{
-        background-color: rgb(233, 206, 206);
-        box-shadow: 0 8px 8px 0 lightslategrey;
-    }
+    .active{background-color: rgb(90, 141, 207);color: white;box-shadow: 0 8px 8px 0 lightslategrey;}
+    .btn:hover{background-color: rgb(233, 206, 206);box-shadow: 0 8px 8px 0 lightslategrey;}
 
-    .optioncontent p{
-        font-size: 16px;
-        font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    }
+    .optioncontent p{font-size: 16px;font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;}
 
-    .aloption input, label{
-        cursor: pointer;
-    }
-
+    .aloption input, label{cursor: pointer;}
 </style>
 
 <div class="optioncontent">
-    <!--- Select Language -->
+    <!--============================== Select Language BUTTON ==============================-->
     <div>
         <p>Select your Language</p>
         <div id="languageoption">
             <button class="langbtn act" id="eng" onclick="engbtn()">ENGLISH</button>&nbsp;
             <button class="langbtn" id="engmal" onclick="embtn()">ENGLISH - MALAY</button>&nbsp;
-            <button class="langbtn" id="engchi" onclick="ecbtn()">ENGLISH - CHINESE</button>
+            <button class="langbtn" id="engchi" onclick="echibtn()">ENGLISH - CHINESE</button>&nbsp;
         </div>
-
+        
+        <!-- Language Option Stay Active When Clicked -->
         <script>
-            // Language Option Stay Active When Clicked
             var heads = document.getElementById("languageoption");
             var button = heads.getElementsByClassName("langbtn");
             for (var j = 0; j < button.length; j++) {
                 button[j].addEventListener("click", function() {
                     var currents = document.getElementsByClassName("act");
                     currents[0].className = currents[0].className.replace(" act", "");
-                    this.className += " act";
-                });
-            }
+                    this.className += " act";});}
+        </script>
+
+        <!-- Let SERVER know what language selected -->
+        <script>
+            var lang = '';
+            function engbtn(){
+                document.getElementById('radioBtn').style.visibility='hidden';
+                lang = 'English';
+                $.ajax({
+                    url: '/languageOption',
+                    type: "POST",
+                    dataType: "json",
+                    data: { lang },
+                    cache: false,
+                    success: function(data) {
+                        console.log(data + "get ENGLISH");
+                    },
+                    error: function(jqxhr, status, error) {
+                        console.log("X get ENGLISH");
+                    },});}
+
+            function embtn(){
+                document.getElementById('radioBtn').style.visibility='hidden';
+                lang = 'EnglishMalay';
+                $.ajax({
+                    url: '/languageOption',
+                    type: "POST",
+                    dataType: "json",
+                    data: { lang },
+                    cache: false,
+                    success: function(data) {
+                        console.log(data + "get ENGLISH-MALAY");
+                    },
+                    error: function(jqxhr, status, error) {
+                        console.log("X get ENGLISH-MALAY");
+                    },});}
+
+            function echibtn(){
+                document.getElementById('radioBtn').style.visibility='visible';
+                lang = 'EngChinese';
+                $.ajax({
+                    url: '/languageOption',
+                    type: "POST",
+                    dataType: "json",
+                    data: { lang },
+                    cache: false,
+                    success: function(data) {
+                        console.log(data + "get ENGLISH-CHINESE");
+                    },
+                    error: function(jqxhr, status, error) {
+                        console.log("X get ENGLISH-CHINESE");
+                    },});}
         </script>
     </div>
     
     <br>
 
-    <!--- Select With Translation -->
+    <!--===================== Select PREPROCESS / TRANSLATION BUTTON ======================-->
     <div id="transoption">
-        <p>With Translation ?</p>
-        <button class="btn active">YES</button>&nbsp;
-        <button class="btn">NO</button>
+        <p>Type of Translation</p>
+        <button class="btn active" onclick="pre2trans()">PRE-PROCESS --> TRANSLATION</button>&nbsp;
+        <button class="btn" onclick="trans2pre()">TRANSLATION --> PRE-PROCESS</button>
 
+        <!-- With OPTION BUTTON Stay Active When Clicked -->
         <script>
-            // With Translate Option Stay Active When Clicked
             var header = document.getElementById("transoption");
             var btns = header.getElementsByClassName("btn");
             for (var i = 0; i < btns.length; i++) {
@@ -158,84 +143,174 @@
                 });
             }
         </script>
+
+        <!-- Let SERVER know what language selected -->
+        <script>
+            var PTtype = '';
+            function pre2trans(){
+                PTtype = 'Pre2Trans';
+                $.ajax({
+                    url: '/PreprocessOption',
+                    type: "POST",
+                    dataType: "json",
+                    data: { PTtype },
+                    cache: false,
+                    success: function(data) {
+                        console.log(data + "get Pre2Trans");
+                    },
+                    error: function(jqxhr, status, error) {
+                        console.log("X get Pre2Trans");
+                    },});}
+
+            function trans2pre(){
+                PTtype = 'Trans2Pre';
+                $.ajax({
+                    url: '/PreprocessOption',
+                    type: "POST",
+                    dataType: "json",
+                    data: { PTtype },
+                    cache: false,
+                    success: function(data) {
+                        console.log(data + "get Trans2Pre");
+                    },
+                    error: function(jqxhr, status, error) {
+                        console.log("X get Trans2Pre");
+                    },});}
+        </script>
     </div>
     
     <br>
 
-    <!--- Select Algorithms -->
+    <!--============================ Select APPROACHES BUTTON ============================-->
     <div class="aloption">
         <p>Select your Approaches</p>
-        <table>
-            <tr>
-                <td width="300px" style="padding: 0px 5px; vertical-align: top;">
-                    <div class="custom-control custom-checkbox">
-                        <div><input type="checkbox" class="custom-control-input" id="supervised" checked>
-                        <label class="custom-control-label" for="supervised">Supervised Learning</label></div>
-                            
-                        <div><input type="checkbox" class="custom-control-input" id="semi">
-                        <label class="custom-control-label" for="semi">Semi-supervised Learning</label></div>
-                
-                        <div><input type="checkbox" class="custom-control-input" id="lexi">
-                        <label class="custom-control-label" for="lexi">Lexicon-based Learning</label></div>
-                    </div>
-                </td>
-                <td width="300px">
-                    <div class="hehe custom-control custom-checkbox">
-                        <div><input type="checkbox" class="custom-control-input" id="a1" checked>
-                        <label class="custom-control-label" for="a1">Approach 1</label></div>
-                            
-                        <div><input type="checkbox" class="custom-control-input" id="a2">
-                        <label class="custom-control-label" for="a2">Approach 2</label></div>
-
-                        <div><input type="checkbox" class="custom-control-input" id="a3">
-                        <label class="custom-control-label" for="a3">Approach 3</label></div>
-
-                        <div><input type="checkbox" class="custom-control-input" id="a4">
-                        <label class="custom-control-label" for="a4">Approach 4</label></div>
-
-                        <div><input type="checkbox" class="custom-control-input" id="a5">
-                        <label class="custom-control-label" for="a5">Approach 5</label></div>
-                    </div>
-                </td>
-            </tr>
-
-            <script>
-            </script>
-        </table>
-    </div>
-</div>
     
-<script>
-    $(function() {
-        ecbtn();
-        $("#engchi").click(ecbtn);
-    });
+        <div class="row">
+            <div class="col-sm">
+                <div class="custom-control custom-checkbox">
+                    <div><input type="checkbox" class="custom-control-input" name="super" id="t1" checked>
+                    <label class="custom-control-label" for="t1">Supervised Learning</label></div>
+                        
+                    <div><input type="checkbox" class="custom-control-input" name="semi" id="t2" disabled>
+                    <label class="custom-control-label" for="t2">Semi-supervised Learning</label></div>
+            
+                    <div><input type="checkbox" class="custom-control-input" name="lexi" id="t3">
+                    <label class="custom-control-label" for="t3">Lexicon-based Learning</label></div>
+            </div></div>
+            <div class="col-sm">
+                <div class="hehe custom-control custom-checkbox" id="radioBtn" style="visibility: hidden;">
+                    <div><input type="checkbox" class="custom-control-input" name="svm" id="a1" checked>
+                    <label class="custom-control-label" for="a1">SVM Classifier</label></div>
+                        
+                    <div><input type="checkbox" class="custom-control-input" name="lr" id="a2">
+                    <label class="custom-control-label" for="a2">Logistic Regression Classifier</label></div>
 
-    function ecbtn() {
-        if (this.checked) {
-            $("input#semi").removeAttr("disabled");
-        } else {
-            $("input#semi").attr("disabled", true);
-        }
-    }
-</script>
+                    <div><input type="checkbox" class="custom-control-input" name="nb" id="a3">
+                    <label class="custom-control-label" for="a3">Naive Bayes Classifier</label></div>
 
-        <!--<div><input type="checkbox" class="custom-control-input" id="defaultIndeterminate2" checked>
-        <label class="custom-control-label" for="defaultIndeterminate2">Default indeterminate</label></div>
+                    <div><input type="checkbox" class="custom-control-input" name="dt" id="a4">
+                    <label class="custom-control-label" for="a4">Decision Tree Classifier</label></div>
 
-        <div><input type="checkbox" class="custom-control-input" id="defaultUncheckedDisabled2" disabled>
-        <label class="custom-control-label" for="defaultUncheckedDisabled2">Default unchecked disabled</label></div>
-          
-        <input type="checkbox" class="chkbox" value="supervised" onclick="selsuper()"> Supervised<br>
-        <ul id="superopt" style="display: none" style="margin-left: 15px">
-            <input type="checkbox" class="chkbox" value="supervised"> Approach 1<br>
-            <input type="checkbox" class="chkbox" value="supervised"> Approach 2<br>
-            <input type="checkbox" class="chkbox" value="supervised"> Approach 3<br>
-            <input type="checkbox" class="chkbox" value="supervised"> Approach 4<br>
-            <input type="checkbox" class="chkbox" value="supervised"> Approach 5<br>
-        </ul>
-        <input type="checkbox" class="chkbox" value="semisuper"> Semi &#45; Supervised<br>
-        <input type="checkbox" class="chkbox" value="supervised"> Lexicon<br>-->
+                    <!--<div><input type="checkbox" class="custom-control-input" id="a5">
+                    <label class="custom-control-label" for="a5">Ensemble Classifier</label></div>-->
+                </div>
+            </div>
+        </div>
+
+        <script>
+            var classify = '';
+            $(document).ready(function(){
+                $('input[name="super"]').change(function(){
+                    if($('#t1').prop('checked')){
+                        console.log('SUPERVISED checked!');
+                    }else{
+                        console.log('SUPERVISED x checked!');
+                    }
+                });
+                $('input[name="semi"]').change(function(){
+                    if($('#t2').prop('checked')){
+                        console.log('SEMI-S checked!');
+                    }else{
+                        console.log('SEMI-S x checked!');
+                    }
+                });
+                $('input[name="lexi"]').change(function(){
+                    if($('#t3').prop('checked')){
+                        console.log('LEXICON checked!');
+                    }else{
+                        console.log('LEXICON x checked!');
+                    }
+                });
+
+
+                $('input[name="svm"]').change(function(){
+                    if($('#a1').prop('checked')){
+                        $("#a2").prop("checked", false);
+                        $("#a3").prop("checked", false);
+                        $("#a4").prop("checked", false);
+                        classify = 'SVM';
+                        classifier();
+                        console.log('SVM is checked!');
+                    }else{
+                        console.log('SVM is unchecked!');
+                    }
+                });
+                $('input[name="lr"]').change(function(){
+                    if($('#a2').prop('checked')){
+                        $("#a1").prop("checked", false);
+                        $("#a3").prop("checked", false);
+                        $("#a4").prop("checked", false);
+                        classify = 'LR';
+                        classifier();
+                        console.log('Logistic Regression is checked!');
+                    }else{
+                        console.log('Logistic Regression is unchecked!');
+                    }
+                });
+                $('input[name="nb"]').change(function(){
+                    if($('#a3').prop('checked')){
+                        $("#a2").prop("checked", false);
+                        $("#a1").prop("checked", false);
+                        $("#a4").prop("checked", false);
+                        classify = 'NB';
+                        classifier();
+                        console.log('Naive Bayes is checked!');
+                    }else{
+                        console.log('Naive Bayes is unchecked!');
+                    }
+                });
+                $('input[name="dt"]').change(function(){
+                    if($('#a4').prop('checked')){
+                        $("#a2").prop("checked", false);
+                        $("#a3").prop("checked", false);
+                        $("#a1").prop("checked", false);
+                        classify = 'DT';
+                        classifier();
+                        console.log('Decision Tree is checked!');
+                    }else{
+                        console.log('Decision Tree is unchecked!');
+                    }
+                });
+
+                function classifier(){
+                    var classSelected = classify;
+                    $.ajax({
+                        url: '/ClassifierSelection',
+                        type: "POST",
+                        dataType: "json",
+                        data: { classSelected },
+                        cache: false,
+                        success: function(data) {
+                            console.log(data + "get Classifier");
+                        },
+                        error: function(jqxhr, status, error) {
+                            console.log("X get Classifier");
+                        },});}
+            });
+        </script>
+    </div>
+    
+</div>
 
 <!--<script>
     function myFunction() {

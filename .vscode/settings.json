@@ -1,0 +1,8 @@
+{
+    //"python.pythonPath": "C:\\Python37\\python.exe",
+    "python.pythonPath": "C:\\ProgramData\\Anaconda3\\python.exe",
+    "python.linting.pylintPath": "venv/bin/pylint",
+    //"python.linting.pylintPath": "C:\\ProgramData\\Anaconda3\\Scripts",
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true
+}

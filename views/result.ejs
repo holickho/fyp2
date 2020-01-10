@@ -5,21 +5,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <!--<script src="https://apis.google.com/js/client.js?onload=checkAuth" gapi_processed="true"></script>-->
-
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
 <style>
-
     #output{
-        width: 1350px;
+        width: 1700px;
         border: 1px solid red;
-        padding: 10px 15px;
-    }
+        padding: 10px 15px;}
 
-    #title{
-        font-weight: bold;
-    }
-
+    #title{font-weight: bold;}
 </style>
 
 <div id = "output">
@@ -29,7 +23,7 @@
         <table>
             <tr>
                 <td>
-                    
+                    <p>Output</p>
                 </td>
                 <td>
 
@@ -37,16 +31,33 @@
             </tr>
         </table>
 
-
-
-
-
-
-
     </div>
 
     <div id="sentimentanalysis">
         <h5 id = "title">Sentiment Analysis</h5>
     </div>
+
+    <script>
+        function submitText(){
+            var inputText = document.getElementById('inputTextToSave').value;
+            $.ajax({
+                url: '/inputTranslate',
+                type: "POST",
+                dataType: "json",
+                data: { inputText },
+                cache: false,
+                success: function(data) {
+                    console.log(data + "gaodim");
+                    showLoad();
+                },
+                error: function(jqxhr, status, error) {
+                    console.log("X gaodim");
+                    console.log('jqxhr: ', jqxhr);
+                    console.log('status: ', status);
+                    console.log('error', error);
+                },});}
+    </script>
+        
+
 
 </div>

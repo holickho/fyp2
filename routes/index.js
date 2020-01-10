@@ -4,6 +4,7 @@ const { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
 const multer = require('multer');
 const fs = require('fs');
 const csv = require('csv-parse');
+const TransText = require('../models/translate.model');
 
 
 // Welcome Page
@@ -27,11 +28,28 @@ router.get('/translate', ensureAuthenticated, (req, res) =>
 
 // Manage Corpus
 router.get('/corpus', ensureAuthenticated, (req, res) =>
-  res.render('corpus', {
-    user: req.user,
-    layout: 'mainLayout',
+  TransText.find({}, function(err, allDetails){
+    if(err) {
+        console.log('/getcorpus err: ', err);
+    } else {
+      res.render('corpus', {
+        details: allDetails,
+        user: req.user,
+        layout: 'mainLayout',
+      })
+      console.log('/getcorpus DOWNLOADED!!');
+    }
   })
 );
+
+router.get("/",(req, res) => {
+  getCorpus(req, res);
+});
+
+
+function getCorpus(req, res){
+  
+}
 
 // Option
 router.get('/option', ensureAuthenticated, (req, res) =>
