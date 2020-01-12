@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Manual Annotation</title>
+</head>
+
+<body>
+    <h4>Step 1:</h4>
+    <div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Select Corpus
+            <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+            <li><a href="#" id="test">HTML</a></li>
+            <li><a href="#">CSS</a></li>
+            <li><a href="#">JavaScript</a></li>
+        </ul>
+    </div>
+    <h4>Step 2:</h4>
+    <div class="radio">
+        <label><input type="radio" name="optradio" value="Subjectivity" id="Subjectivity" checked>Subjectivity</label>
+    </div>
+    <div class="radio">
+        <label><input type="radio" name="optradio" value="Sentiment" id="Sentiment">Sentiment</label>
+    </div>
+
+    <!-- <script>
+                        $('input[type="radio"]').click(function(){
+                            if($(this).attr("value")=="Subjectivity"){
+                                $(".showCSV").show();
+                            }
+                            if($(this).attr("value")=="Sentiment"){
+                                $(".selectSentimentType").show();
+                    
+                            }        
+                        });
+                    $('input[type="radio"]').trigger('click');
+                  </script> -->
+
+    <div id="selectSentimentType" style="display:none">
+        <label><input type="radio" name="optradio" value="coarseGrained">Coarse-Grained</label>
+        <label><input type="radio" name="optradio" value="fineGrained">Fine-Grained</label>
+    </div>
+
+
+
+    <script>
+        $(document).ready(function () {
+            $('input[type="radio"]').click(function () {
+                if ($(this).attr('id') == 'Sentiment') {
+                    $('#selectSentimentType').show();
+                }
+                else {
+                    $('#selectSentimentType').hide();
+                }
+            });
+        });
+    </script>
+
+    <div>
+        <label><input type="checkbox" id="eng" value="eng">English</label>
+        <label><input type="checkbox" id="codemixedEC" value="codemixedEC">English Chinese</label>
+        <label><input type="checkbox" id="codemixedEM" value="codemixedEM">English Malay</label>
+    </div>
+
+    <div id="showCSV" style="display:none">
+        <iframe src="http://127.0.0.1:5500/views/showdata.html" style="width:100%"></iframe>
+    </div>
+
+    <div id="showCSV2" style="display:none">
+        <iframe src="http://127.0.0.1:5500/views/showdata2.html" style="width:100%"></iframe>
+    </div>
+
+    <script>
+        $('input[type="checkbox"]').click(function () {
+            $('.box').hide();
+            if ($('#eng').is(':checked')) {
+
+            }
+            if ($('#codemixedEC').is(':checked') && !$('#codemixedEM').is(':checked')) {
+                $('#showCSV2').show();
+            }
+            if ($('#codemixedEM').is(':checked') && $('#codemixedEC').is(':checked')) {
+                $('#showCSV').show();
+            }
+        });
+    </script>
+
+    <div id="selectButton">
+        <label><input type="button" id="engbtn" value="english"></label>
+        <label><input type="button" id="yesbtn" value="yes"></label>
+    </div>
+
+    <script>
+            $(document).ready(function () {
+                $('input[type="button"]').click(function () {
+                    if ($(this).attr('id')== 'engbtn' ) {
+                        
+                            $('#showCSV').show();
+                        
+                    }
+                    else {
+                        $('#showCSV').hide();
+                    }
+                });
+            });
+        </script>
+
+</body>
+
+</html>

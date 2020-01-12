@@ -7,226 +7,522 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
 <style>
-    body{font-family: Comic Sans MS;position:fixed;top:0;bottom:0;left:0;right:0;}
-    
+    body {
+        font-family: Comic Sans MS;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+    .container{
+        margin: 5px 0px;
+    }
+
     .modal {
-        display: none;      /* Hidden by default */
-        position: fixed;    /* Stay in place */
-        z-index: 1;         /* Sit on top */
+        display: none;
+        /* Hidden by default */
+        position: fixed;
+        /* Stay in place */
+        z-index: 1;
+        /* Sit on top */
         left: 0;
         top: 0;
-        width: 100%;        /* Full width */
-        height: 100%;       /* Full height */
-        overflow: auto;     /* Enable scroll if needed */
-        background-color: rgb(0, 0, 0);                 /* Fallback color */
-        background-color: rgba(0, 0, 0, 0.4);}          /* Black w/ opacity */
+        width: 100%;
+        /* Full width */
+        height: 100%;
+        /* Full height */
+        overflow: auto;
+        /* Enable scroll if needed */
+        background-color: rgb(0, 0, 0);
+        /* Fallback color */
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    /* Black w/ opacity */
 
     /* Modal Content/Box */
     .modal-content {
         background-color: #fefefe;
-        margin: 15% auto;           /* 15% from the top and centered */
+        margin: 15% auto;
+        /* 15% from the top and centered */
         padding: 20px;
         border: 1px solid #888;
-        width: 50%;}                /* Could be more or less, depending on screen size */
-    
-    /* The Close Button */
-    .close {color: #aaa;float: right;font-size: 28px;font-weight: bold;}
+        width: 50%;
+    }
 
-    .close:hover,.close:focus {color: black;text-decoration: none;cursor: pointer;}
+    /* Could be more or less, depending on screen size */
+
+    /* The Close Button */
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
 
     .submitBtn button {
         border-radius: 15px;
         padding: 13px 100px;
-        background-color:black;
+        background-color: black;
         border-color: transparent;
         color: white;
-        margin: 20px 700px;
-        display: inline;}
+        margin: 20px 0px;
+        display: inline;
+    }
 
-    .submitBtn button:hover, button:focus, button:active{background-color:lightgrey;color: black;}
-    
-    .textNdocBtn button {
-        background-color: white;
-        text-align: center;
-        border-radius: 10px;
-        padding: 8px;
-        width: 12%;
-        margin-left: 1px;
-        margin-right: 15px;
-        border-style:solid;
-        border-color: #aaa;
-        border-width: 0.5px;}
+    .submitBtn button:hover,
+    button:focus,
+    button:active {
+        background-color: lightgrey;
+        color: black;
+    }
 
-    .textNdocBtn button:hover, button:focus, button:active{background-color: lightsteelblue;color: white;}
+    .tdbtn {
+        background-color:lightsteelblue;
+        color: black;
+        padding: 10px 30px;
+        font-size: 15px;
+        width: 220px;
+        margin-right: 10px;
+        margin-bottom: 20px;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        border-radius: 12px;
+    }
 
-    .optiondiv{margin-left: 50px;}
+    .activ{background-color: rgb(90, 141, 207);color: white;box-shadow: 0 8px 8px 0 lightslategrey;}
+    .tdbtn:hover{background-color: rgb(233, 206, 206);box-shadow: 0 8px 8px 0 lightslategrey;}
+
+
+    .optiondiv {
+        margin-left: 50px;
+    }
+
+    #outLayout{
+        border: 2px grey solid; border-radius: 5px; padding: 20px 20px;
+    }
+
+    .column {
+        float: left;
+        width: 10%;
+        padding: 7px;
+    }
+
 </style>
 
 <!-- ========================================   BODY   ======================================== -->
 
 <body>
 
-<!-- ==================   WORD COUNT   ================== -->
+    <!-- ==================   WORD COUNT   ================== -->
 
-<script>
-    $(document).ready(function () {
-        $("#inputTextToSave").on('keyup', function () {
-            var words = this.value.length; //count characters
-            //var words = this.value.match(/\S+/g).length; //count words
-            if (words > 500) {
-                // Split the string on first 200 words and rejoin on spaces
-                var trimmed = $(this).val().split(/\s+/, 500).join(" ");
-                // Add a space at the end to make sure more typing creates new words
-                $(this).val(trimmed + " ");
-            }
-            else {
-                $('#display_count').text(words);
-                $('#word_left').text(500 - words);
-            }
-        });
-    }); 
-</script>
+    <script>
+        $(document).ready(function () {
+            $("#inputTextToSave").on('keyup', function () {
+                var words = this.value.length; //count characters
+                //var words = this.value.match(/\S+/g).length; //count words
+                if (words > 500) {
+                    // Split the string on first 200 words and rejoin on spaces
+                    var trimmed = $(this).val().split(/\s+/, 500).join(" ");
+                    // Add a space at the end to make sure more typing creates new words
+                    $(this).val(trimmed + " ");
+                }
+                else {
+                    $('#display_count').text(words);
+                    $('#word_left').text(500 - words);
+                }
+            });
+        }); 
+    </script>
 
-<!-- ==================   TEXT & DOCUMENT button   ================== -->
+    <!-- ==================   TEXT & DOCUMENT button   ================== -->
 
-<div class="textNdocBtn"  style="margin-bottom: 1%;">
-    <button>Text</button>
-    <button onclick="modelUploadFile()">Documents</button></div>
+    <div id="textNdocBtn">
+        <button class="tdbtn activ">Text</button>
+        <button class="tdbtn " onclick="modelUploadFile()">Documents</button></div>
 
-<!-- ==========   TRANSLATOR text field & LANGUAGE option  ========== -->
+    <!-- TEXT & DOCUMENT Option Stay Active When Clicked -->
+    <script>
+        var heads = document.getElementById("textNdocBtn");
+        var button = heads.getElementsByClassName("tdbtn");
+        for (var j = 0; j < button.length; j++) {
+            button[j].addEventListener("click", function() {
+                var currents = document.getElementsByClassName("activ");
+                currents[0].className = currents[0].className.replace(" activ", "");
+                this.className += " activ";});}
+    </script>
 
-<div class="row">
-    <div class="col-sm">
-        <div class="md-form amber-textarea active-amber-textarea" style="margin-right: 40px;">
-            <textarea id="inputTextToSave" class="md-textarea form-control" rows="13" cols="85" placeholder="Enter text here..." style="border-color: black; border-style: solid; border-radius: 6px;"></textarea>
-            <span id="display_count">0</span>/ 500 characters</div></td></div>
-    <div class="col-sm">
-        <div class="optiondiv">
-            <!-- views/option.ejs -->
-            <% include ../views/option %>
-</div></div></div>
+    <!-- ==========   TRANSLATOR text field & LANGUAGE option  ========== -->
 
-<!-- ======================   ANALYZE button   ====================== -->
-
-<div class="row"><div class="col-sm">
-    <div class="submitBtn"><button onclick="return submitText()"> ANALYZE </button></div>
-</div></div>
-
-<!-- ============   POST the TRANSLATE TEXT to server   ============= -->
-
-<script>
-    function submitText(){
-        var inputText = document.getElementById('inputTextToSave').value;
-        if (inputText == null){
-            alert("Please Enter Text !!!");
-            return false;
-        }else{
-            $.ajax({
-                url: '/inputTranslate',
-                type: "POST",
-                dataType: "json",
-                data: { inputText },
-                cache: false,
-                success: function(data) {
-                    console.log(data + "gaodim");
-                },
-                error: function(jqxhr, status, error) {
-                    console.log("X gaodim");
-                    console.log('jqxhr: ', jqxhr);
-                    console.log('status: ', status);
-                    console.log('error', error);
-                },});}}
-</script>
-
-<!-- ===============   POP OUT window for UPLOAD DOC   =============== -->
-
-<div id="myModal" class="modal" >
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <form name="form" class="sta-main-form open" action="/uploadfile" method="post" enctype="multipart/form-data">
-            <div style="margin-left:30%">
-                <label for="file" style="font-size: xx-large;">Choose a document</label></br>
-                <p style="margin-left: 6%;">Upload a txt, csv or xml file only</p>
-                <input id="file" type="file" name="file" style="margin-left: 10%;" /></br></br>
-                <button type="submit" value="upload" onclick="return validate();" class="btn btn-info btn-rounded" style="background-color:lightsteelblue;border-color:transparent;color: black;width:30%;margin-top:0.5%;margin-left:15%">
-                Upload File</button></div></form>
-
-        <script>
-            function validate() {
-                var file = form.file.value;
-                var reg = /(.*?)\.(txt|csv|xml|)$/;
-                if (!file.match(reg)) {
-                    alert("Invalid File");
-                    return false;
-                }else 
-                    alert("File Uploaded");
-                var fileToLoad = document.getElementById("file").files[0];
-                var fileReader = new FileReader();
-                fileReader.onload = function (fileLoadedEvent) {
-                    var textFromFileLoaded = fileLoadedEvent.target.result;
-                    document.getElementById("inputTextToSave").value = textFromFileLoaded;};
-                fileReader.readAsText(fileToLoad, "UTF-8");}
-
-            function modelUploadFile() { modal.style.display = "block";}
-
-            var modal = document.getElementById("myModal");             // Get the modal
-            var btn = document.getElementById("myBtn");                 // Get the button that opens the modal
-            var span = document.getElementsByClassName("close")[0];     // Get the <span> element that closes the modal
-            span.onclick = function () {modal.style.display = "none";}  // When the user clicks on the button, open the modal
-                                                                        // When the user clicks on <span> (x), close the modal
-            window.onclick = function (event) {                         // When the user clicks anywhere outside of the modal, close it
-                if (event.target == modal) { modal.style.display = "none";}}    
-        </script>
-    </div>
-</div>
-
-<!-- ===============   ANALYSIS RESULT DISPLAY   =============== -->
-
-<br>
-<div class="row">
-    <div class="col-sm" style="border: 2px solid;">
-        <h5 style="font-weight: bold;">Subjectivity Analysis</h5>
-        <div style="border: 2px solid;">
-            <h4>ORIGINAL TEXT</h4>
-            <p></p>
+    <div class="row">
+        <div>
+            <div class="md-form amber-textarea active-amber-textarea" style="margin-left: 15px; margin-right: 40px;">
+                <textarea id="inputTextToSave" class="md-textarea form-control" rows="13" cols="85"
+                    placeholder="Enter text here..."
+                    style="border-color: black; border-style: solid; border-radius: 6px;"></textarea>
+                <span id="display_count">0</span>/ 500 characters</div>
+            </td>
+        </div>
+        <div>
+            <div class="optiondiv">
+                <!-- views/option.ejs -->
+                <% include ../views/option %>
+            </div>
         </div>
     </div>
-    <div class="col-sm" style="border: 2px solid;">
-        <h5 style="font-weight: bold;">Sentiment Analysis</h5>
+
+    <!-- ====================   LOADING EFFECT   =================== -->
+
+    <div class="container" style="max-width:100%; text-align: center; display: inline-block;">
+        <div id="load" style="visibility: hidden;">
+            <div class="spinner-grow text-primary" role="status" style="height: 20px; width: 20px;"></div>&nbsp;&nbsp;
+            <div class="spinner-grow text-primary" role="status" style="height: 20px; width: 20px;"></div>&nbsp;&nbsp;
+            <div class="spinner-grow text-primary" role="status" style="height: 20px; width: 20px;"></div>
+        </div>
     </div>
 
-    <!-- With OPTION BUTTON Stay Active When Clicked -->
     <script>
-        var header = document.getElementById("transoption");
-        var btns = header.getElementsByClassName("btn");
-        for (var i = 0; i < btns.length; i++) {
-            btns[i].addEventListener("click", function() {
-                var current = document.getElementsByClassName("active");
-                current[0].className = current[0].className.replace(" active", "");
-                this.className += " active";
-            });
+        function showLoad() { var x = document.getElementById("load"); x.style = "visibility: visible;"; }
+        function disableLoad() { var x = document.getElementById("load"); x.style = "visibility: hidden;"; }
+    </script>
+
+    <!-- ======================   ANALYZE button   ====================== -->
+
+    <div class="container" style="max-width:100%; text-align: center; display: inline-block;">
+        <div>
+            <div class="submitBtn"><button onclick="submitText()"> ANALYZE </button></div>
+        </div>
+    </div>
+
+    <!-- ============   POST the TRANSLATE TEXT to server   ============= -->
+
+    <script>
+        var outdata = 1;
+        function submitText() {
+            showLoad();
+            var inputText = document.getElementById('inputTextToSave').value;
+            if (document.getElementById('inputTextToSave').value == "") {
+                
+                disableLoad();
+                alert("Please Enter Text !!!");
+
+            } else {
+                console.log('Received Sentences. Calling Algorithm process!!');
+                $.ajax({
+                    url: '/inputTranslate',
+                    type: "POST",
+                    dataType: "json",
+                    data: { inputText },
+                    cache: false,
+                    success: function (data) {
+                        if(outdata == 1){
+                            document.getElementById("oritext").innerHTML = data.word;
+                            document.getElementById("preprotext").innerHTML = data.preproText;
+                            document.getElementById("tagging").innerHTML = data.tag;
+                            document.getElementById("transtext").innerHTML = data.translated;
+                            console.log('data: ', data);
+                            console.log("data.preproText: ", data.preproText);
+                            console.log("data.tag: ", data.tag);
+                            console.log("data.translated: ", data.translated);
+                            outdata = 2;
+                        }else if(outdata == 2){
+                            document.getElementById("oritext2").innerHTML = data.word;
+                            document.getElementById("preprotext2").innerHTML = data.preproText;
+                            document.getElementById("tagging2").innerHTML = data.tag;
+                            document.getElementById("transtext2").innerHTML = data.translated;
+                            console.log('data: ', data);
+                            console.log("data.preproText: ", data.preproText);
+                            console.log("data.tag: ", data.tag);
+                            console.log("data.translated: ", data.translated);
+                            outdata = 1;
+                        }
+                        
+                        disableLoad();
+                    },
+                    error: function (jqxhr, status, error) {
+                        console.log("X gaodim");
+                        console.log('jqxhr: ', jqxhr);
+                        console.log('status: ', status);
+                        console.log('error', error);
+                    },
+                });
+            }
         }
     </script>
-    
-    <!--<div class="outputanalysis">-->
-    <!-- views/result.ejs -->
-    <!--<% include ../views/result %></div>-->
+
+    <!-- ===============   POP OUT window for UPLOAD DOC   =============== -->
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <form name="form" class="sta-main-form open" action="/uploadfile" method="post"
+                enctype="multipart/form-data">
+                <div style="margin-left:30%">
+                    <label for="file" style="font-size: xx-large;">Choose a document</label></br>
+                    <p style="margin-left: 6%;">Upload a txt, csv or xml file only</p>
+                    <input id="file" type="file" name="file" style="margin-left: 10%;" /></br></br>
+                    <button type="submit" value="upload" onclick="return validate();" class="btn btn-info btn-rounded"
+                        style="background-color:lightsteelblue;border-color:transparent;color: black;width:30%;margin-top:0.5%;margin-left:15%">
+                        Upload File</button>
+                </div>
+            </form>
+
+            <script>
+                function validate() {
+                    var file = form.file.value;
+                    var reg = /(.*?)\.(txt|csv|xml|)$/;
+                    if (!file.match(reg)) {
+                        alert("Invalid File");
+                        return false;
+                    } else
+                        alert("File Uploaded");
+                    var fileToLoad = document.getElementById("file").files[0];
+                    var fileReader = new FileReader();
+                    fileReader.onload = function (fileLoadedEvent) {
+                        var textFromFileLoaded = fileLoadedEvent.target.result;
+                        document.getElementById("inputTextToSave").value = textFromFileLoaded;
+                    };
+                    fileReader.readAsText(fileToLoad, "UTF-8");
+                }
+
+                function modelUploadFile() { modal.style.display = "block"; }
+
+                var modal = document.getElementById("myModal");             // Get the modal
+                var btn = document.getElementById("myBtn");                 // Get the button that opens the modal
+                var span = document.getElementsByClassName("close")[0];     // Get the <span> element that closes the modal
+                span.onclick = function () { modal.style.display = "none";}  // When the user clicks on the button, open the modal
+                // When the user clicks on <span> (x), close the modal
+                window.onclick = function (event) {                         // When the user clicks anywhere outside of the modal, close it
+                    if (event.target == modal) { modal.style.display = "none";}
+                }    
+            </script>
+        </div>
+    </div>
+
+    <!-- ===============   ANALYSIS RESULT DISPLAY   =============== -->
+
+    <br>
+    <div class="row" style="min-width:50%; max-width:100%; margin-bottom: 50px;">
+        <div class="container" style="max-width:50%;">
+            <h5 style="font-weight: bold;">Subjectivity Analysis</h5>
+            <div>
+                <h4>Original Sentences</h4>
+                <div id="outLayout">
+                <p id="oritext"></p></div>
+                <h4>Preprocess Sentences</h4>
+                <div id="outLayout">
+                <p id="preprotext"></p></div>
+                <h4>Tagging</h4>
+                <div id="outLayout">
+                <p id="tagging"></p></div>
+                <h4>Result</h4>
+                <div id="outLayout">
+                <p id="transtext"></p></div>
+            </div>
+        </div>
+        <div class="container" style="max-width:50%;">
+            <h5 style="font-weight: bold;">Subjectivity Analysis</h5>
+            <div>
+                <h4>Original Sentences</h4>
+                <div id="outLayout">
+                <p id="oritext2"></p></div>
+                <h4>Preprocess Sentences</h4>
+                <div id="outLayout">
+                <p id="preprotext2"></p></div>
+                <h4>Tagging</h4>
+                <div id="outLayout">
+                <p id="tagging2"></p></div>
+                <h4>Result</h4>
+                <div id="outLayout">
+                <p id="transtext2"></p></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="min-width:50%; max-width:100%;">
+        <div class="container" style="max-width: 100%;">
+            <h2>Result for Supervise Learning</h2>
+        </div>
+
+        <div class="container" style="max-width: 100%;">
+            <div class="column" style="border: 1px solid blue;margin-left: 15%;">
+                <img src="/images/smiling.png" style="width:90%;">
+            </div>
+            <div class="column">
+                <img src="/images/sad.png" style="width:95%;opacity: 0.5;">
+            </div>
+            <div class="column">
+                <img src="/images/anger.png" style="width:95%;opacity: 0.5;">
+            </div>
+            <div class="column">
+                <img src="/images/surprise.png" style="width:100%;opacity: 0.5;margin-top:2%">
+            </div>
+            <div class="column">
+                <img src="/images/disgust.png" style="width:100%;opacity: 0.5;margin-top:2%">
+            </div>
+            <div class="column">
+                <img src="/images/fear2.png" style="width:100%;opacity: 0.5;margin-top:4%">
+            </div>
+            <div class="column">
+                <img src="/images/neutral.png" style="width:100%;opacity: 0.5;;margin-top:-8%">
+            </div>
+        </div>
+
+        <div class="container" style="min-width:50%; max-width:100%;">
+            <table class="w3-table-all" style="width: 100%;margin-bottom: 5%;">
+                <tr>
+                    <th>Emotion</th>
+                    <th>Polarity</th>
+                    <th></th>
+                    <th></th>
+                    <th>Scale</th>
+                </tr>
+                <tr>
+                    <td>Happy</td>
+                    <td style="color:lime;"><b>Positive</b></td>
+                    <td style="color:#aaa">Negative</td>
+                    <td style="color:#aaa;">Neutral</td>
+                    <td style="color:lime">0.8006</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="row" style="min-width:50%; max-width:100%;">
+        <div class="container" style="max-width: 100%;">
+            <h2>Result for Semi-Supervise Learning</h2>
+        </div>
+
+        <div class="container" style="max-width: 100%; display: table;">
+            <div class="column" style="border: 1px solid blue;margin-left: 15%;">
+                <img src="/images/smiling.png" style="width:90%;">
+            </div>
+            <div class="column" style="float: left;">
+                <img src="/images/sad.png" style="width:95%;opacity: 0.5;">
+            </div>
+            <div class="column">
+                <img src="/images/anger.png" style="width:95%;opacity: 0.5;">
+            </div>
+            <div class="column">
+                <img src="/images/surprise.png" style="width:100%;opacity: 0.5;margin-top:2%">
+            </div>
+            <div class="column">
+                <img src="/images/disgust.png" style="width:100%;opacity: 0.5;margin-top:2%">
+            </div>
+            <div class="column">
+                <img src="/images/fear2.png" style="width:100%;opacity: 0.5;margin-top:4%">
+            </div>
+            <div class="column">
+                <img src="/images/neutral.png" style="width:100%;opacity: 0.5;;margin-top:-8%">
+            </div>
+        </div>
+
+        <div class="container" style="min-width:50%; max-width:100%; margin-bottom: 50px;">
+            <table class="w3-table-all" style="width: 100%;margin-bottom: 5%;">
+                <tr>
+                    <th>Emotion</th>
+                    <th>Polarity</th>
+                    <th></th>
+                    <th></th>
+                    <th>Scale</th>
+                </tr>
+                <tr>
+                    <td>Happy</td>
+                    <td style="color:lime;"><b>Positive</b></td>
+                    <td style="color:#aaa">Negative</td>
+                    <td style="color:#aaa;">Neutral</td>
+                    <td style="color:lime">0.7845</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="row" style="min-width:50%; max-width:100%; margin-bottom: 50px;">
+        <div class="container" style="max-width: 100%;">
+            <h2>Result for Lexicon-Based Learning</h2>
+        </div>
+
+        <div class="container" style="max-width: 100%; display: table;">
+            <div class="column" style="border: 1px solid blue;margin-left: 15%;">
+                <img src="/images/smiling.png" style="width:90%;">
+            </div>
+            <div class="column">
+                <img src="/images/sad.png" style="width:95%;opacity: 0.5;">
+            </div>
+            <div class="column">
+                <img src="/images/anger.png" style="width:95%;opacity: 0.5;">
+            </div>
+            <div class="column">
+                <img src="/images/surprise.png" style="width:100%;opacity: 0.5;margin-top:2%">
+            </div>
+            <div class="column">
+                <img src="/images/disgust.png" style="width:100%;opacity: 0.5;margin-top:2%">
+            </div>
+            <div class="column">
+                <img src="/images/fear2.png" style="width:100%;opacity: 0.5;margin-top:4%">
+            </div>
+            <div class="column">
+                <img src="/images/neutral.png" style="width:100%;opacity: 0.5;;margin-top:-8%">
+            </div>
+        </div>
+
+        <div class="container" style="min-width:50%; max-width:100%; margin-bottom: 50px;">
+            <table class="w3-table-all" style="width: 100%;margin-bottom: 5%;">
+                <tr>
+                    <th>Emotion</th>
+                    <th>Polarity</th>
+                    <th></th>
+                    <th></th>
+                    <th>Scale</th>
+                </tr>
+                <tr>
+                    <td>Happy</td>
+                    <td style="color:lime;"><b>Positive</b></td>
+                    <td style="color:#aaa">Negative</td>
+                    <td style="color:#aaa;">Neutral</td>
+                    <td style="color:lime">0.89745</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $("#analyze").on("click", function (e) {
+                if ($("#supervised").is(':checked')) {
+                    $('.showIfcheked').show();
+                } else {
+                    $('.showIfcheked').hide();
+                }
+                if ($('#semi').is(':checked')) {
+                    $('.showIfcheked2').show();
+                } else {
+                    $('.showIfcheked2').hide();
+                }
+                if ($('#lexi').is(':checked')) {
+                    $('.showIfcheked3').show();
+                } else {
+                    $('.showIfcheked3').hide();
+                }
+            });
+        });
+    </script>
 
 </body>
 
-<!-- ====================   LOADING EFFECT   =================== -->
 
-<div id="load" class="d-flex justify-content-center" style="visibility: hidden;">
-        <div class="spinner-grow text-primary" role="status" style="height: 20px; width: 20px;"></div>&nbsp;&nbsp;
-        <div class="spinner-grow text-primary" role="status" style="height: 20px; width: 20px;"></div>&nbsp;&nbsp;
-        <div class="spinner-grow text-primary" role="status" style="height: 20px; width: 20px;"></div>
-</div>
-<script>
-    function showLoad(){var x = document.getElementsById("load");x.style = "visibility: visible;";}
-</script>
 
 <!--Bring Data To Another Page-->
 <!--<script type="text/javascript">jQuery(function($){$('#inputTextToSave').load('result.ejs #tagging');});</script>-->
-
-
-

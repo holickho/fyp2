@@ -185,19 +185,19 @@
     <div class="aloption">
         <p>Select your Approaches</p>
     
-        <div class="row">
-            <div class="col-sm">
+        <div class="row" style="max-width: 100%;">
+            <div class="container" style="max-width:50%;">
                 <div class="custom-control custom-checkbox">
                     <div><input type="checkbox" class="custom-control-input" name="super" id="t1" checked>
                     <label class="custom-control-label" for="t1">Supervised Learning</label></div>
                         
                     <div><input type="checkbox" class="custom-control-input" name="semi" id="t2" disabled>
-                    <label class="custom-control-label" for="t2">Semi-supervised Learning</label></div>
+                    <label class="custom-control-label" for="t2" onclick="Xready()">Semi-supervised Learning</label></div>
             
-                    <div><input type="checkbox" class="custom-control-input" name="lexi" id="t3">
+                    <div><input type="checkbox" class="custom-control-input" name="lexi" id="t3" checked>
                     <label class="custom-control-label" for="t3">Lexicon-based Learning</label></div>
             </div></div>
-            <div class="col-sm">
+            <div class="container" style="max-width:50%;">
                 <div class="hehe custom-control custom-checkbox" id="radioBtn" style="visibility: hidden;">
                     <div><input type="checkbox" class="custom-control-input" name="svm" id="a1" checked>
                     <label class="custom-control-label" for="a1">SVM Classifier</label></div>
@@ -218,12 +218,18 @@
         </div>
 
         <script>
+            function Xready(){
+                alert("Sorry!! This approach is not yet READY!!");
+            };
+
             var classify = '';
             $(document).ready(function(){
                 $('input[name="super"]').change(function(){
                     if($('#t1').prop('checked')){
+                        $("#t3").prop("checked", true);
                         console.log('SUPERVISED checked!');
                     }else{
+                        $("#t3").prop("checked", false);
                         console.log('SUPERVISED x checked!');
                     }
                 });
@@ -236,8 +242,10 @@
                 });
                 $('input[name="lexi"]').change(function(){
                     if($('#t3').prop('checked')){
+                        $("#t1").prop("checked", true);
                         console.log('LEXICON checked!');
                     }else{
+                        $("#t1").prop("checked", false);
                         console.log('LEXICON x checked!');
                     }
                 });

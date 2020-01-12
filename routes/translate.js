@@ -4,10 +4,13 @@ const router = express.Router();
 const TransText = require('../models/translate.model');
 var { PythonShell } = require('python-shell');
 
-var d = new Date();
-var datestring = (d.getMonth()+1)  + "/" + d.getDay() + "/" + d.getFullYear();
-
+// var d = new Date();
+// var datestring = (d.getMonth()+1)  + "/" + d.getDay() + "/" + d.getFullYear();
+var datestring = new Date();
 var oriText = "";
+var preproText = "";
+var tag = "";
+var translated = "";
 var currentuser = '';
 var output = "";
 var value = 1;
@@ -30,6 +33,10 @@ router.post('/ClassifierSelection', (req, res) => {
     classSelection(req, res);
 });
 
+router.get('/mainPage', (req,res) => {
+    updateFrontEnd(req, res);
+});
+
 function classSelection(req, res){
     var classifier = req.body.classSelected;
     console.log(classifier);
@@ -49,7 +56,7 @@ function classSelection(req, res){
         classy = 4;
         console.log('classifier = '+ classifier);
     }
-    res.send({ some: JSON.stringify({ response: 'json' }) });
+    res.send({});
 }
 
 function languagesOption(req, res){
@@ -67,7 +74,7 @@ function languagesOption(req, res){
         value = 3;
         console.log('value = '+ value);
     }
-    res.send({ some: JSON.stringify({ response: 'json' }) });
+    res.send({});
 }
 
 
@@ -82,70 +89,73 @@ function preprocessOption(req, res){
         prevalue = 2;
         console.log('prevalue = '+ prevalue);
     }
-    res.send({ some: JSON.stringify({ response: 'json' }) });
+    res.send({});
 }
 
 function doTranslation(req, res) {
+    inputText = "";
     var inputText = req.body.inputText;
     oriText = inputText;
     currentuser = req.user.name;
-    console.log('translate.js insertTranslation()');
+    console.log('translate.js doTranslation()');
     console.log('translate.js req.body.inputText: ', req.body.inputText);
     
     console.log('current VALUE :' + value);
     console.log('current PREVALUE :' + prevalue);
+    let response = null;
 
     if (value == 1){
         if(prevalue == 1){
             console.log('ENGLISH ONLY with PRE-2-TRANS');
-            //runPy("--method 1 --text \"" + inputText + "\" --export json --name \"HLTranslated\"");
+            response = runPy2(inputText, res);
         }
         if(prevalue == 2){
             console.log('ENGLISH ONLY with TRANS-2-PRE');
-            //runPy("--method 1 --text \"" + inputText + "\" --export json --name \"HLTranslated\"");
+            response = runPy2(inputText, res);
         }
     }
     else if (value == 2){
         if(prevalue == 1){
             console.log('ENG-MALAY with PRE-2-TRANS');
-            runPy2(inputText);
-
+            response = runPy2(inputText, res);
         }
         if(prevalue == 2){
             console.log('ENG-MALAY with TRANS-2-PRE');
-            runPy2(inputText);
+            response = runPy2(inputText, res);
         }
     }
     else if (value == 3){
         if(prevalue == 1){
             if(classy == 1)
-            runPy("--init_comb 1 --tgt_clf 1 --sentences \"" + inputText + "\"");
+            response = runPy("--init_comb 1 --tgt_clf 1 --sentences \"" + inputText + "\"");
             if(classy == 2)
-            runPy("--init_comb 1 --tgt_clf 2 --sentences \"" + inputText + "\"");
+            response = runPy("--init_comb 1 --tgt_clf 2 --sentences \"" + inputText + "\"");
             if(classy == 3)
-            runPy("--init_comb 1 --tgt_clf 3 --sentences \"" + inputText + "\"");
+            response = runPy("--init_comb 1 --tgt_clf 3 --sentences \"" + inputText + "\"");
             if(classy == 4)
-            runPy("--init_comb 1 --tgt_clf 4 --sentences \"" + inputText + "\"");
+            response = runPy("--init_comb 1 --tgt_clf 4 --sentences \"" + inputText + "\"");
         }
         if(prevalue == 2){
             if(classy == 1)
-            runPy("--init_comb 2 --tgt_clf 1 --sentences \"" + inputText + "\"");
+            response = runPy("--init_comb 2 --tgt_clf 1 --sentences \"" + inputText + "\"");
             if(classy == 2)
-            runPy("--init_comb 2 --tgt_clf 2 --sentences \"" + inputText + "\"");
+            response = runPy("--init_comb 2 --tgt_clf 2 --sentences \"" + inputText + "\"");
             if(classy == 3)
-            runPy("--init_comb 2 --tgt_clf 3 --sentences \"" + inputText + "\"");
+            response = runPy("--init_comb 2 --tgt_clf 3 --sentences \"" + inputText + "\"");
             if(classy == 4)
-            runPy("--init_comb 2 --tgt_clf 4 --sentences \"" + inputText + "\"");
+            response = runPy("--init_comb 2 --tgt_clf 4 --sentences \"" + inputText + "\"");
         }
     }
-    res.send({ some: JSON.stringify({ response: 'json' }) });
+    console.log('translate.js response: ', response);
 }
 
 function insertTranslation(){
+    console.log('translate.js insertTranslation()');
+    console.log('translate.js datestring: ', datestring);
     var input_Text = oriText;
-    var preText = null;
-    var tagging = null;
-    var outputText = output;
+    var preText = preproText;
+    var tagging = tag;
+    var outputText = translated;
     var datetime = datestring;
     var by = currentuser;
     var langType = value;
@@ -172,7 +182,8 @@ function insertTranslation(){
     });
 }
 
-function runPy2(word) { // the 'word' = the input value of the sentences
+
+function runPy2(word, res) { // the 'word' = the input value of the sentences
     console.log('runPy2() : ', word);
     try {
         const spawn = require("child_process").spawn;                                   //require child process to call python
@@ -182,10 +193,32 @@ function runPy2(word) { // the 'word' = the input value of the sentences
 
             // Do something with the data returned from python script
 
-            output += Buffer.from(data).toString();                     //get 'data' from python file
+            output = "";
+            output += Buffer.from(data).toString();                   //get 'data' from python file
+
+            var arguReturn = new Array();
+            arguReturn = output.split("*");                           // split the string value when reach * symbol [check /mengjian/fypDemo.py]
+
+            preproText = arguReturn[0];
+            tag = arguReturn[1];
+            translated = arguReturn[2];
+
             console.log('translate.js output :', output);
-            insertTranslation();                                        // here I update Mongoose table
+            console.log(word);
+            console.log(preproText);
+            console.log(tag);
+            console.log(translated);
             
+            insertTranslation();                                      // here I update Mongoose table
+
+            const response = {                                        // res the result to the mainpage
+                word:word,
+                preproText: preproText,
+                tag: tag,
+                translated: translated
+            }
+            console.log('translate.js response :', response);
+            res.send(JSON.stringify(response));
         });
     } catch (e) {
         console.log("Error caught! e: ", e);

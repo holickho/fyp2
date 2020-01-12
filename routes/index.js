@@ -6,7 +6,6 @@ const fs = require('fs');
 const csv = require('csv-parse');
 const TransText = require('../models/translate.model');
 
-
 // Welcome Page
 router.get('/', forwardAuthenticated, (req, res) => res.render('welcome'));
 
@@ -42,26 +41,9 @@ router.get('/corpus', ensureAuthenticated, (req, res) =>
   })
 );
 
-router.get("/",(req, res) => {
-  getCorpus(req, res);
-});
-
-
-function getCorpus(req, res){
-  
-}
-
 // Option
 router.get('/option', ensureAuthenticated, (req, res) =>
   res.render('option', {
-    user: req.user,
-    layout: 'mainPage',
-  })
-);
-
-// Result
-router.get('/result', ensureAuthenticated, (req, res) =>
-  res.render('result', {
     user: req.user,
     layout: 'mainPage',
   })
@@ -95,7 +77,28 @@ router.post('/uploadfile', upload.single('file'), (req, res, next) => {
 
 //redirect to sentiment page
 router.get('/sentiment', (req, res) => {
-  res.render('sentiment');
+  res.render('sentiment', {
+    user: req.user,
+    layout: 'mainLayout',
+  })
+});
+
+// TRY 1
+router.get('/try', (req, res) => {
+  res.render('try');
+});
+
+// TRY 2
+router.get('/try2', (req, res) => {
+  res.render('try2');
+});
+
+// Manual Anotation
+router.get('/manualAnnotation', ensureAuthenticated , (req, res) => {
+  res.render('manualAnnotation.ejs', {
+    user: req.user,
+    layout: 'mainLayout',
+  })
 });
 
 // Main Pages
@@ -105,6 +108,5 @@ router.get('/mainPage', ensureAuthenticated, (req, res) =>
     layout: 'mainLayout',
   })
 );
-
 
 module.exports = router;

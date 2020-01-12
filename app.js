@@ -10,7 +10,6 @@ const Grid = require('gridfs-stream');
 const methodOverride = require('method-override');
 multer = require('multer');
 
-
 const app = express();
 app.use( express.static( "public" ) );
 
@@ -50,17 +49,17 @@ app.use(function(req, res, next) {
   next();
 });
 
-
 // Routes
 app.use('/', require('./routes/index.js'));
 app.use('/', require('./routes/translate.js'));
 app.use('/users', require('./routes/users.js'));
 
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, console.log(`Server started on port ${PORT}`));
 
-// const PORT = process.env.PORT || 5000;
+module.exports = app;
 
-// app.listen(PORT, console.log(`Server started on port ${PORT}`));
-app.listen(8080,console.log(`Server started on port 8080`));
+//app.listen(8080,console.log(`Server started on port 8080`));
 
 //Export & Import CSV
 // var express = require('express');
@@ -133,6 +132,6 @@ app.listen(8080,console.log(`Server started on port 8080`));
 // app.listen(PORT, console.log(`Server started on port ${PORT}`));
   
 
-module.exports = app;
+
 
 

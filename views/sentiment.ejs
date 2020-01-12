@@ -1,3 +1,45 @@
+<script type="text/javascript">
+    function Upload() {
+        var file = document.getElementById("file");
+        var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.csv|.txt)$/;
+        if (regex.test(file.value.toLowerCase())) {
+            if (typeof (FileReader) != "undefined") {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var table = document.createElement("table");
+                    var rows = e.target.result.split("\n");
+                    for (var i = 0; i < rows.length; i++) {
+                        var cells = rows[i].split(",");
+                        if (cells.length > 1) {
+                            var row = table.insertRow(-1);
+                            for (var j = 0; j < cells.length; j++) {
+                                var cell = row.insertCell(-1);
+                                cell.innerHTML = cells[j];
+                            }
+                        }
+                    }
+                    var dvCSV = document.getElementById("dvCSV");
+                    dvCSV.innerHTML = "";
+                    dvCSV.appendChild(table);
+                }
+                reader.readAsText(file.files[0]);
+            } else {
+                alert("This browser does not support HTML5.");
+            }
+        } else {
+            alert("Please upload a valid CSV file.");
+        }
+    }
+</script>
+<form name="form" class="sta-main-form open" action="/uploadfile" method="post" enctype="multipart/form-data">
+<input type="file" id="file" name="file" />
+<input type="submit" id="upload" value="Upload" onclick="Upload()" />
+</form>
+<hr />
+<div id="dvCSV">
+</div>
+
+<!--
 <!DOCTYPE html>
 <html>
  <head>
@@ -57,3 +99,4 @@ $(document).ready(function(){
  
 });
 </script>
+-->
