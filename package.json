@@ -39,7 +39,7 @@
     "passport": "^0.4.0",
     "passport-google-plus-token": "^2.1.0",
     "passport-local": "^1.0.0",
-    "pug": "^2.0.4",
+    "pug": "^3.0.1",
     "python-shell": "^1.0.8",
     "python3": "0.0.1",
     "sentiment": "^5.0.2",
